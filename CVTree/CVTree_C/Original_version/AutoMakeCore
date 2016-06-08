@@ -1,0 +1,21 @@
+# this file is the core of the automatically update of the
+# dependent relation among the sources and headers.
+# firstly, an imexplicit rule to build the object file from the cpp file
+# secondly, by the help of '-MM' option of gcc, a dependent file will be
+# generate to the object files' directory, which will be include by the makefile
+
+# the implicit rule for the obj file
+$(OBJECTS_DIR)/%.o:%.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) $< -o $@
+# automatically generate the dependencs relationship of the
+# src files and header files
+# 1.remove all dependence files first
+# 2.generate the dependence file ,it's like '*.o:*.cpp *.h'(use gcc -MM option)
+# 3.modify the dependence file,like '*.o *.d:*.cpp *.h'
+
+$(DEPENDS):$(OBJECTS_DIR)/%.d:%.cpp
+	@mkdir -p $(OBJECTS_DIR);set -e; rm -f $@;\
+	$(CXX) -MM $(CXXFLAGS) $(INCPATH) $< | sed -e 's,\($*\)\.o,$(OBJECTS_DIR)\/& $@,g'>  $@
+
+
+-include $(DEPENDS)

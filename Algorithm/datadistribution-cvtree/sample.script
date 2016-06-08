@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+
+spawn scp -r /home/ivan/Documents/03 root@131.181.93.92:/home/yifan/Public/
+
+expect "root@131.181.93.92's password:"
+
+send "90opl;./\r"
+
+spawn scp -r /home/ivan/Documents/04 root@131.181.93.67:/home/yifan/Public/
+
+expect "root@131.181.93.67's password:"
+
+send "90opl;./\r"
+
+spawn scp -r /home/ivan/Documents/05 root@131.181.93.213:/home/yifan/Public/
+
+expect "root@131.181.93.213's password:"
+
+send "90opl;./\r"
+
+spawn scp -r /home/ivan/Documents/06 root@131.181.93.214:/home/yifan/Public/
+
+expect "root@131.181.93.214's password:"
+
+send "90opl;./\r"
+
+interact
